@@ -1,34 +1,63 @@
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
-import { Link, useLocation } from 'react-router-dom'
-import { 
-  Home, 
-  School, 
-  Users, 
-  BarChart3, 
-  User,
+import { Link, useLocation, useNavigate } from 'react-router-dom'
+import {
+  Home,
+  School,
+  Users,
+  BarChart3,
+  User as UserIcon,
   HelpCircle,
   LogOut,
   Menu,
   X
-} from 'lucide-react'
+} from 'lucide-react';
+import { clearFirebasePersistence } from '@/lib/clearFirebasePersistance';
+import { signOut } from 'firebase/auth'
+import { auth } from '@/firebase'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
+import { toast } from 'sonner'
+
 const navItems = [
   { href: '/dashboard', label: 'Dashboard', icon: Home },
   { href: '/schools', label: 'Schools', icon: School },
   { href: '/teachers', label: 'Teachers', icon: Users },
   { href: '/reports', label: 'Reports', icon: BarChart3 },
-  { href: '/profile', label: 'Profile', icon: User },
+  { href: '/profile', label: 'Profile', icon: UserIcon },
   { href: '/support', label: 'Support', icon: HelpCircle },
 ]
 
 export const Navigation: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false)
+  const [isLoggingOut, setIsLoggingOut] = useState(false)
   const location = useLocation()
-  
-  const isAuthPage = location.pathname === '/login' || location.pathname === '/register'
-  
+  const navigate = useNavigate()
+
+  const isAuthPage =
+    location.pathname === '/login' || location.pathname === '/register'
+
+  const handleLogout = async () => {
+    try {
+      setIsLoggingOut(true);
+
+      await signOut(auth);
+      setIsOpen(false);
+
+      
+      await clearFirebasePersistence();
+      toast.success('Logged out successfully');
+
+      navigate('/login', { replace: true })
+      document.cookie = 'session=; Max-Age=0; path=/;'
+    } catch (err) {
+      console.error('Failed to logout:', err)
+      toast.error('Logout failed. Please try again.');
+    } finally {
+      setIsLoggingOut(false)
+    }
+  };
+
   if (isAuthPage) return null
 
   return (
@@ -55,15 +84,15 @@ export const Navigation: React.FC = () => {
             {navItems.map((item) => {
               const Icon = item.icon
               const isActive = location.pathname === item.href
-              
+
               return (
                 <Link key={item.href} to={item.href}>
                   <Button
-                    variant={isActive ? "secondary" : "ghost"}
+                    variant={isActive ? 'secondary' : 'ghost'}
                     size="sm"
                     className={cn(
-                      "relative",
-                      isActive && "bg-primary/10 text-primary"
+                      'relative',
+                      isActive && 'bg-primary/10 text-primary'
                     )}
                   >
                     <Icon className="w-4 h-4 mr-2" />
@@ -73,17 +102,23 @@ export const Navigation: React.FC = () => {
                         layoutId="activeTab"
                         className="absolute inset-0 bg-primary/10 rounded-lg -z-10"
                         initial={false}
-                        transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                        transition={{ type: 'spring', stiffness: 500, damping: 30 }}
                       />
                     )}
                   </Button>
                 </Link>
               )
             })}
-            
-            <Button variant="ghost" size="sm" className="ml-4">
+
+            <Button
+              variant="ghost"
+              size="sm"
+              className="ml-4"
+              onClick={handleLogout}
+              disabled={isLoggingOut}
+            >
               <LogOut className="w-4 h-4 mr-2" />
-              Logout
+              {isLoggingOut ? 'Logging out…' : 'Logout'}
             </Button>
           </div>
 
@@ -102,7 +137,7 @@ export const Navigation: React.FC = () => {
         {isOpen && (
           <motion.div
             initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
+            animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             className="md:hidden py-4 border-t border-border/50"
           >
@@ -110,11 +145,15 @@ export const Navigation: React.FC = () => {
               {navItems.map((item) => {
                 const Icon = item.icon
                 const isActive = location.pathname === item.href
-                
+
                 return (
-                  <Link key={item.href} to={item.href} onClick={() => setIsOpen(false)}>
+                  <Link
+                    key={item.href}
+                    to={item.href}
+                    onClick={() => setIsOpen(false)}
+                  >
                     <Button
-                      variant={isActive ? "secondary" : "ghost"}
+                      variant={isActive ? 'secondary' : 'ghost'}
                       className="w-full justify-start"
                     >
                       <Icon className="w-4 h-4 mr-2" />
@@ -123,10 +162,15 @@ export const Navigation: React.FC = () => {
                   </Link>
                 )
               })}
-              
-              <Button variant="ghost" className="w-full justify-start mt-4">
+
+              <Button
+                variant="ghost"
+                className="w-full justify-start mt-4"
+                onClick={handleLogout}
+                disabled={isLoggingOut}
+              >
                 <LogOut className="w-4 h-4 mr-2" />
-                Logout
+                {isLoggingOut ? 'Logging out…' : 'Logout'}
               </Button>
             </div>
           </motion.div>

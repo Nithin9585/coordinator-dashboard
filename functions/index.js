@@ -30,3 +30,18 @@ setGlobalOptions({ maxInstances: 10 });
 //   logger.info("Hello logs!", {structuredData: true});
 //   response.send("Hello from Firebase!");
 // });
+const functions = require("firebase-functions");
+
+// A function to return Firebase config to frontend
+exports.getFirebaseConfig = functions.https.onRequest((req, res) => {
+  const config = functions.config().app; // All your 'app' namespace keys
+  res.json({
+    apiKey: config.firebase_api_key,
+    authDomain: config.firebase_auth_domain,
+    projectId: config.firebase_project_id,
+    storageBucket: config.firebase_storage_bucket,
+    messagingSenderId: config.firebase_messaging_sender_id,
+    appId: config.firebase_app_id,
+    measurementId: config.firebase_measurement_id,
+  });
+});
