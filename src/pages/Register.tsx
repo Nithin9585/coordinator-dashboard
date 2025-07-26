@@ -60,9 +60,15 @@ export const Register: React.FC = () => {
     
   //   setIsLoading(true);
     
+<<<<<<< Updated upstream
   //   try {
   //     // Create user with Firebase Authentication
   //     await signup(formData.email, formData.password);
+=======
+    try {
+      // Create user with Firebase Authentication
+      // await signup(formData.email, formData.password);
+>>>>>>> Stashed changes
       
   //     // Here you can add additional user data to your database if needed
   //     // For example, storing fullName, mobile, and cluster in Firestore
@@ -87,6 +93,7 @@ export const Register: React.FC = () => {
   // }
 
   return (
+<<<<<<< Updated upstream
     // <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background via-secondary/20 to-primary/5 p-4">
     //   <motion.div
     //     initial={{ opacity: 0, scale: 0.9 }}
@@ -108,6 +115,29 @@ export const Register: React.FC = () => {
     //           Register as EduAssist Coordinator
     //         </AnimatedCardTitle>
     //       </AnimatedCardHeader>
+=======
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background via-secondary/20 to-primary/5 p-4">
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.6, type: "spring" }}
+        className="w-full max-w-md"
+      >
+        <AnimatedCard className="shadow-elegant">
+          <AnimatedCardHeader className="text-center">
+            <motion.div
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
+              className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4"
+            >
+              <img src="/ea_logo.png" alt="EduAssist Logo" className="w-10 h-10" />
+            </motion.div>
+            <AnimatedCardTitle className="text-gradient">
+              Register as EduAssist Coordinator
+            </AnimatedCardTitle>
+          </AnimatedCardHeader>
+>>>>>>> Stashed changes
           
     //       <AnimatedCardContent>
     //         <form onSubmit={handleSubmit} className="space-y-6">

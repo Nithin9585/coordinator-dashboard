@@ -111,7 +111,7 @@ export const Login: React.FC = () => {
                 transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
                 className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4"
               >
-                <User className="w-8 h-8 text-primary-foreground" />
+              <img src="/ea_logo.png" alt="EduAssist Logo" className="w-10 h-10" />
               </motion.div>
               <AnimatedCardTitle className="text-gradient">
                 Sign In to EduAssist
