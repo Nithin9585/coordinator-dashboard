@@ -13,14 +13,14 @@ import { Support } from "./pages/Support";
 import {Profile} from "./pages/profile";
 import { MainLayout } from "./components/layout/MainLayout";
 import NotFound from "./pages/NotFound";
-import { AuthProvider } from "./lib/AuthContext";
+// import { AuthProvider } from "./lib/AuthContext";
 
 const queryClient = new QueryClient();
 
 const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
-      <AuthProvider>
+      {/* <AuthProvider> */}
         <TooltipProvider>
           <Toaster />
           <Sonner />
@@ -41,7 +41,7 @@ const App = () => {
             </Routes>
           </BrowserRouter>
         </TooltipProvider>
-      </AuthProvider>
+      {/* </AuthProvider> */}
     </QueryClientProvider>
   );
 };export default App;
