@@ -2,6 +2,11 @@
 **Empowering Teachers in Multi-Grade Classrooms**  
 *Google Cloud Agentic AI Day Submission — README*
 
+
+https://github.com/user-attachments/assets/b288dc2f-a5d4-4fa0-a121-1ca24bd3b243
+
+
+
 ## Table of Contents
 
 - [Overview](#overview)
